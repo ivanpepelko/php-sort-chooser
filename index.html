@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <title>PHP sort chooser</title>
+        <meta charset="UTF-8">
+        <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900|Material+Icons" rel="stylesheet" type="text/css">
+        <link href="https://cdn.jsdelivr.net/npm/quasar@2.0.0-beta.15/dist/quasar.prod.css" rel="stylesheet" type="text/css">
+    </head>
+    <body>
+        <q-app id="app">
+            <q-layout view="hHh lpR fFf">
+                <q-page-container>
+                    <q-page class="q-mx-auto" style="max-width: 1280px">
+
+                        <h1>PHP sort chooser</h1>
+
+                        <div v-bind:change="filter()">
+                            Sort by:
+                            <q-radio label="Key" v-model="sortBy" val="key"></q-radio>
+                            <q-radio label="Value" v-model="sortBy" val="value"></q-radio>
+                            <q-radio label="Any" v-model="sortBy" val="any"></q-radio>
+                        </div>
+
+                        <div v-bind:change="filter()">
+                            Maintain keys association:
+                            <q-radio label="Yes" v-model="keysAssociation" val="yes"></q-radio>
+                            <q-radio label="No" v-model="keysAssociation" val="no"></q-radio>
+                            <q-radio label="Both" v-model="keysAssociation" val="both"></q-radio>
+                        </div>
+
+                        <div v-bind:change="filter()">
+                            Order:
+                            <q-checkbox :label="type" v-for="(value, type) in orderTypes" v-model="orderTypes[type]"></q-checkbox>
+                            <q-btn-group class="q-ml-md">
+                                <q-btn @click="allOrders(true)" color="primary" label="All"></q-btn>
+                                <q-btn @click="allOrders(false)" color="primary" label="None"></q-btn>
+                            </q-btn-group>
+                        </div>
+
+                        <q-table
+                                :columns="columns"
+                                :pagination="{ rowsPerPage: 0 }"
+                                :rows="sorts"
+                                :rows-per-page-options="[0]"
+                        >
+                            <template v-slot:body="props">
+                                <q-tr>
+                                    <q-td><a :href="props.row.url">{{ props.row.name }}</a></q-td>
+                                    <q-td>{{ props.row.sortBy }}</q-td>
+                                    <q-td>{{ props.row.maintainKey }}</q-td>
+                                    <q-td>{{ props.row.order }}</q-td>
+                                    <q-td>
+                                        <pre><code>{{ props.row.signature }}</code></pre>
+                                    </q-td>
+                                </q-tr>
+                            </template>
+                        </q-table>
+
+                    </q-page>
+                </q-page-container>
+            </q-layout>
+        </q-app>
+
+        <script src="https://cdn.jsdelivr.net/npm/vue@3/dist/vue.global.prod.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/quasar@2.0.0-beta.15/dist/quasar.umd.prod.js"></script>
+        <script src="index.js"></script>
+
+    </body>
+</html>
