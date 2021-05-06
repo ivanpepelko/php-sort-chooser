@@ -136,16 +136,18 @@ const app = Vue.createApp({
     methods: {
         filter() {
             this.sorts = sorts.filter(sort => {
-                if (this.sortBy !== 'any') {
-                    return sort.sortBy === this.sortBy;
+                if (orderTypes[sort.order]) {
+                    if (this.sortBy !== 'any') {
+                        return sort.sortBy === this.sortBy;
+                    }
+
+                    if (this.keysAssociation !== 'both') {
+                        const maintain = this.keysAssociation === 'yes';
+                        return sort.maintainKey === maintain;
+                    }
                 }
 
-                if (this.keysAssociation !== 'both') {
-                    const maintain = this.keysAssociation === 'yes';
-                    return sort.maintainKey === maintain;
-                }
-
-                return orderTypes[sort.order];
+                return false;
             });
         },
         allOrders(value) {
