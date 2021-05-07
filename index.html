@@ -45,7 +45,13 @@
                         >
                             <template v-slot:body="props">
                                 <q-tr>
-                                    <q-td><a :href="props.row.url">{{ props.row.name }}</a></q-td>
+                                    <q-td>
+                                        <a :href="props.row.url">
+                                            <q-chip color="primary" dense square>
+                                                <code>{{ props.row.name }}</code>
+                                            </q-chip>
+                                        </a>
+                                    </q-td>
                                     <q-td>{{ props.row.sortBy }}</q-td>
                                     <q-td>{{ props.row.maintainKey }}</q-td>
                                     <q-td>{{ props.row.order }}</q-td>
